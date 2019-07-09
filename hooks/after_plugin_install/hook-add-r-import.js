@@ -26,10 +26,10 @@ if (process.env.TARGET) {
         if (fs.existsSync(val)) {
           console.log("Android platform available !");
           //Getting the package name from the android.json file,replace with your plugin's id
-          var packageName = configobj.installed_plugins["cordova-plugin-twilio-video"]["PACKAGE_NAME"];
+          var packageName = configobj.installed_plugins["cordova.plugin.twilio.video"]["PACKAGE_NAME"];
           console.log("With the package name: "+packageName);
           console.log("Adding import for R.java");
-            replace_string_in_file(val,"package cordova-plugin-twilio-video;","package cordova-plugin-twilio-video;\n\nimport "+packageName+".R;");
+            replace_string_in_file(val,"package cordova.plugin.twilio.video;","package cordova.plugin.twilio.video;\n\nimport "+packageName+".R;");
 
         } else {
             console.log("No android platform found! :(");

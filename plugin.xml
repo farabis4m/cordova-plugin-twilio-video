@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
-<plugin
-    id="cordova-plugin-twilio-video"
-    version="0.2.0"
+<plugin 
+    id="cordova.plugin.twilio.video"
+    version="0.2.0" 
     xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <name>Twilio video conversation plugin</name>
@@ -13,6 +13,8 @@
         <engine name="cordova" version=">=4.0.0" />
     </engines>
     <platform name="ios">
+    	<hook type="after_plugin_install" src="hooks/embed/embed.js" />
+		<hook type="before_build" src="hooks/embed/embed.js" />
         <config-file parent="/*" target="config.xml">
             <feature name="VideoConversationPlugin">
                 <param name="ios-package" value="TwilioVideoPlugin" />
@@ -26,16 +28,6 @@
         <resource-file src="src/ios/Resources/no-mic-ios-white-33px.png" target="Resources/no-mic-ios-white-33px.png" />
         <resource-file src="src/ios/Resources/no-video-ios-white-33px.png" target="Resources/no-video-ios-white-33px.png" />
         <resource-file src="src/ios/Resources/switch-camera-ios-white-33px.png" target="Resources/switch-camera-ios-white-33px.png" />
-
-        <!-- The earlier iOS OS that this pod supports is 8.1, we can also update to 1.4.3 -->
-        <pods-config ios-min-version="8.1" use-frameworks="true">
-          <!-- If you are facing 'spec' issues on "ionic cordova platform add ios" un commit this section, here I am specificying which
-          github path the specs for the needed Twilio v1 SDK is located -->
-          <!-- <source url="https://github.com/CocoaPods/Specs"/>
-          <source url="https://github.com/CocoaPods/Specs/tree/master/Specs/1/d/9/TwilioVideo/'"/> -->
-        </pods-config>
-        <pod name="TwilioVideo" version="1.4.0" />
-
         <preference name="CAMERA_USAGE_DESCRIPTION" default="Camera" />
         <config-file target="*-Info.plist" parent="NSCameraUsageDescription">
             <string>$CAMERA_USAGE_DESCRIPTION</string>
@@ -44,18 +36,19 @@
         <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
             <string>$MICROPHONE_USAGE_DESCRIPTION</string>
         </config-file>
-
+        <framework src="src/ios/TwilioVideo.framework" custom="true" />
     </platform>
     <platform name="android">
         <hook type="after_plugin_install" src="hooks/after_plugin_install/hook-add-r-import.js" />
+		<hook type="before_compile" src="hooks/before_compile/edit_manifest.js"/>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="VideoConversationPlugin">
-                <param name="android-package" value="cordova-plugin-twilio-video.VideoConversationPlugin" />
+                <param name="android-package" value="cordova.plugin.twilio.video.VideoConversationPlugin" />
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-feature android:name="android.hardware.camera" />
-			<uses-feature android:name="android.hardware.camera.autofocus" />
+			<uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
 			<uses-feature android:glEsVersion="0x00020000" android:required="true" />
             <uses-permission android:name="android.permission.CAMERA" />
             <uses-permission android:name="android.permission.INTERNET" />
@@ -65,9 +58,9 @@
             <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity
-                android:name="cordova-plugin-twilio-video.ConversationActivity"
-                android:configChanges="orientation|screenSize"
+            <activity 
+                android:name="cordova.plugin.twilio.video.ConversationActivity"
+                android:configChanges="orientation|screenSize" 
                 android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             </activity>
         </config-file>
@@ -76,7 +69,7 @@
         <source-file src="src/android/Dialog.java" target-dir="src/com/ekreative/cordova/videoconversations" />
         <framework src="src/android/twiliovideo.gradle" custom="true" type="gradleReference" />
         <dependency id="cordova-plugin-compat" />
-
+        
         <resource-file src="src/android/res/drawable/ic_call_black_24dp.xml" target="res/drawable/ic_call_black_24dp.xml" />
         <resource-file src="src/android/res/drawable/ic_call_end_white_24px.xml" target="res/drawable/ic_call_end_white_24px.xml" />
         <resource-file src="src/android/res/drawable/ic_call_white_24px.xml" target="res/drawable/ic_call_white_24px.xml" />
@@ -90,7 +83,7 @@
 
         <resource-file src="src/android/res/layout/activity_video.xml" target="res/layout/activity_video.xml" />
         <resource-file src="src/android/res/layout/content_video.xml" target="res/layout/content_video.xml" />
-
+      
         <resource-file src="src/android/res/values/colors.xml" target="res/values/colors.xml" />
         <resource-file src="src/android/res/values/dimens.xml" target="res/values/dimens.xml" />
         <resource-file src="src/android/res/values/strings.xml" target="res/values/strings.xml" />

@@ -1,4 +1,4 @@
-package cordova-plugin-twilio-video;
+package cordova.plugin.twilio.video;
 
 
 import android.Manifest;
@@ -474,6 +474,17 @@ public class ConversationActivity extends AppCompatActivity {
             public void onParticipantDisconnected(Room room, Participant participant) {
                 videoStatusTextView.setText("Participant disconnected");
                 removeParticipant(participant);
+
+                /* Automatically disconnect and finish if only one Participant is in the room - CHANGE FROM ORIGINAL*/
+                if(room.getParticipants().size() < 2){
+                    if (room != null) {
+                        room.disconnect();
+                        disconnectedFromOnDestroy = true;
+                    }
+
+                    finish();
+                }
+                /* END CHANGE */
             }
 
             @Override

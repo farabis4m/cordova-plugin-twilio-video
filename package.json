@@ -1,6 +1,6 @@
 {
     "version": "0.2.0",
-    "name": "cordova-plugin-twilio-video",
+    "name": "cordova.plugin.twilio.video",
     "cordova_name": "Twilio video room plugin",
     "license": "Apache 2.0",
     "platforms": [
