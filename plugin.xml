@@ -13,8 +13,8 @@
         <engine name="cordova" version=">=4.0.0" />
     </engines>
     <platform name="ios">
-    	<hook type="after_plugin_install" src="hooks/embed/embed.js" />
-		<hook type="before_build" src="hooks/embed/embed.js" />
+    	<!--<hook type="after_plugin_install" src="hooks/embed/embed.js" />
+		<hook type="before_build" src="hooks/embed/embed.js" />-->
         <config-file parent="/*" target="config.xml">
             <feature name="VideoConversationPlugin">
                 <param name="ios-package" value="TwilioVideoPlugin" />
@@ -39,7 +39,7 @@
         <framework src="TwilioVideo" type="podspec" spec="2.10"/>
     </platform>
     <platform name="android">
-        <!--<hook type="after_plugin_install" src="hooks/after_plugin_install/hook-add-r-import.js" />-->
+        <hook type="after_plugin_install" src="hooks/after_plugin_install/hook-add-r-import.js" />
 		<hook type="before_compile" src="hooks/before_compile/edit_manifest.js"/>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="VideoConversationPlugin">
