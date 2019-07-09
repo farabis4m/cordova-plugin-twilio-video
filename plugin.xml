@@ -39,7 +39,7 @@
         <framework src="TwilioVideo" type="podspec" spec="2.10"/>
     </platform>
     <platform name="android">
-        <hook type="after_plugin_install" src="hooks/after_plugin_install/hook-add-r-import.js" />
+        <!--<hook type="after_plugin_install" src="hooks/after_plugin_install/hook-add-r-import.js" />-->
 		<hook type="before_compile" src="hooks/before_compile/edit_manifest.js"/>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="VideoConversationPlugin">
