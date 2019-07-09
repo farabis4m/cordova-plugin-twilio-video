@@ -84,7 +84,7 @@ module.exports = function (ctx) {
 
 
 
-    var frameworkPbxFileRef = findPbxFileReference(proj, frameworkName);
+    var frameworkPbxFileRef = findPbxFileReference('platforms/ios/Pods/TwilioVideo/Build/iOS/', frameworkName);
     // Clean extra " on the start and end of the string
     var frameworkPbxFileRefPath = frameworkPbxFileRef.path;
     if (frameworkPbxFileRefPath.endsWith("\"")) {
