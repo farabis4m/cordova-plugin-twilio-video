@@ -2,7 +2,7 @@
 //  TVIVideoConstraints.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -122,6 +122,8 @@ extern TVIAspectRatio const TVIAspectRatio16x9;
  */
 @property (nonatomic, assign) TVIAspectRatio aspectRatio;
 
+- (null_unspecified instancetype)init __attribute__((unavailable("Use a TVIVideoConstraintsBuilderBlock instead.")));
+
 @end
 
 /**
@@ -159,7 +161,7 @@ typedef void (^TVIVideoConstraintsBuilderBlock)(TVIVideoConstraintsBuilder * _No
  *   `TVIVideoConstraints` instance using the options that you provided.
  *  @return Video Constraints
  */
-+ (null_unspecified instancetype)constraintsWithBlock:(_Nonnull TVIVideoConstraintsBuilderBlock)builderBlock;
++ (null_unspecified instancetype)constraintsWithBlock:(nonnull TVIVideoConstraintsBuilderBlock)builderBlock;
 
 /**
  *  @brief Specifies the maximum size for your video in native input coordinates (think landscape for 

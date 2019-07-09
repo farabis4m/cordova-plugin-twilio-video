@@ -2,7 +2,7 @@
 //  TVICameraCapturer.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
@@ -11,7 +11,6 @@
 #import "TVIVideoCapturer.h"
 
 @class TVICameraPreviewView;
-@class TVILocalVideoTrack;
 
 /**
  *  The smallest possible size, yielding a 1.22:1 aspect ratio useful for multi-party.
@@ -97,7 +96,7 @@ typedef NS_ENUM(NSUInteger, TVIVideoCaptureSource) {
 
 @optional
 /**
- *  @brief The camera capturer has started capturing local preview.
+ *  @brief The camera capturer has started producing a local preview feed.
  *
  *  @param capturer The capturer which started.
  */
@@ -108,9 +107,7 @@ typedef NS_ENUM(NSUInteger, TVIVideoCaptureSource) {
  *
  *  @discussion By default `TVICameraCapturer` mirrors (only) `TVIVideoViewRenderer` views when the source
  *  is `TVIVideoCaptureSourceFrontCamera`. If you respond to this delegate method then it is your 
- *  responsibility to apply mirroring as you see fit.
- *
- *  @note At the moment, this method is synchronized with capture output and not the renderers.
+ *  responsibility to apply mirroring to renderers as you see fit.
  *
  *  @param capturer The capturer which started.
  *  @param source   The source which is now being captured.
@@ -120,21 +117,21 @@ typedef NS_ENUM(NSUInteger, TVIVideoCaptureSource) {
 
 /**
  *  @brief The camera capturer was temporarily interrupted. Respond to this method to override the default behaviour.
- *  @discussion By default `TVICameraCapturer` will pause the video track in response to an interruption.
- *  This is a good opportunity to update your UI, and/or take some sort of action.
+ *
+ *  @discussion You may wish to pause your `TVILocalVideoTrack`, or update your UI in repsonse to an interruption.
  *
  *  @param capturer The capture which was interrupted.
  */
 - (void)cameraCapturerWasInterrupted:(nonnull TVICameraCapturer *)capturer;
 
 /**
- *  @brief The camera capturer stopped running with a fatal error.
+ *  @brief The camera capturer failed to start or stopped running with a fatal error.
  *
  *  @param capturer The capturer which stopped.
  *  @param error    The error which caused the capturer to stop.
  */
 - (void)cameraCapturer:(nonnull TVICameraCapturer *)capturer
-didStopRunningWithError:(nonnull NSError *)error;
+      didFailWithError:(nonnull NSError *)error;
 
 @end
 
@@ -171,17 +168,9 @@ didStopRunningWithError:(nonnull NSError *)error;
 /**
  *  @brief A view which allows you to preview the camera source.
  *
- *  @discussion The value is `nil` at the time when `TVICameraCapturer` is constructed. However, this property will be set
- *  by the time the `cameraCapturerPreviewDidStart` delegate method is called.
+ *  @discussion Camera preview will not begin until the `cameraCapturerPreviewDidStart` delegate method is called.
  */
-@property (nonatomic, strong, readonly, nullable) TVICameraPreviewView *previewView;
-
-/**
- *  @brief The capturer's local video track.
- *
- *  @discussion This property shouldn't be set manually, and will be readonly in future releases.
- */
-@property (nonatomic, weak, nullable) TVILocalVideoTrack *videoTrack;
+@property (nonatomic, strong, readonly, nonnull) TVICameraPreviewView *previewView;
 
 /**
  *  Returns `YES` if the capturer is currently interrupted, and `NO` otherwise.
@@ -193,20 +182,23 @@ didStopRunningWithError:(nonnull NSError *)error;
  *
  *  @param source The `TVIVideoCaptureSource` to select initially.
  *
- *  @return A camera capturer which can be used to create a `TVILocalVideoTrack`.
+ *  @return A camera capturer which can be used to create a `TVILocalVideoTrack` if video capture source is available, 
+ *  `nil` if it is not.
  */
-- (nonnull instancetype)initWithSource:(TVIVideoCaptureSource)source;
+- (nullable instancetype)initWithSource:(TVIVideoCaptureSource)source;
 
 /**
  *  @brief Creates the capturer with a source and delegate.
  *
- *  @param delegate An object which conforms to `TVICameraCapturerDelegate` that will receive callbacks from the capturer.
  *  @param source The `TVIVideoCaptureSource` to select initially.
+ *  @param delegate An object which conforms to `TVICameraCapturerDelegate` that will receive callbacks from the capturer.
  *
- *  @return A camera capturer which can be used to create a `TVILocalVideoTrack`.
+ *  @return A camera capturer which can be used to create a `TVILocalVideoTrack` if video capture source is available,
+ *  `nil` if it is not.
  */
-- (nonnull instancetype)initWithDelegate:(nullable id<TVICameraCapturerDelegate>)delegate
-                                  source:(TVIVideoCaptureSource)source;
+- (nullable instancetype)initWithSource:(TVIVideoCaptureSource)source
+                               delegate:(nullable id<TVICameraCapturerDelegate>)delegate;
+
 
 /**
  *  @brief Selects a new camera source.

@@ -1,10 +1,9 @@
 //
-//  TVIMediaTrack.h
+//  TVITrack.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
-
 
 /**
  *  `TVITrackState` is an enum defines the possible states of a track.

@@ -2,7 +2,7 @@
 //  TVIParticipant.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -12,7 +12,6 @@
 @class TVIAudioTrack;
 @class TVITrack;
 @class TVIMedia;
-@protocol TVITrackStatisticsDelegate;
 @protocol TVIParticipantDelegate;
 
 /**
@@ -30,11 +29,6 @@
  *  added or removed.
  */
 @property (atomic, weak, nullable) id<TVIParticipantDelegate> delegate;
-
-/**
- *  @brief The Participant's stats delegate. Set this property to be notified about track statistics.
- */
-@property (nonatomic, weak, nullable) id<TVITrackStatisticsDelegate> statsDelegate;
 
 /**
  *  @brief The Participant's identity.

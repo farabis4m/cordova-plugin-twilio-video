@@ -17,5 +17,3 @@ if [ -d BCSymbolMaps ]; then
   fi
   rm -rf BCSymbolMaps
 fi
-
-rm remove_archs || true

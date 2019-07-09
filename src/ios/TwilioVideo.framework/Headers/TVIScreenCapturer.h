@@ -2,7 +2,7 @@
 //  TVIScreenCapturer.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -20,13 +20,6 @@
 @property (atomic, assign, readonly, getter = isCapturing) BOOL capturing;
 
 /**
- *  @brief The capturer's local video track.
- *
- *  @discussion This property shouldn't be set manually, and will be readonly in future releases.
- */
-@property (nonatomic, weak, nullable) TVILocalVideoTrack *videoTrack;
-
-/**
  *  @brief Constructs a `TVIScreenCapturer` with a `UIView`.
  *
  *  @param view The `UIView` to capture content from.
@@ -39,5 +32,7 @@
  *  Instead, it will use the dimensions of the view to determine its capture size.
  */
 - (null_unspecified instancetype)initWithView:(nonnull UIView *)view;
+
+- (null_unspecified instancetype)init __attribute__((unavailable("Initialize TVIScreenCapturer with a UIView.")));
 
 @end

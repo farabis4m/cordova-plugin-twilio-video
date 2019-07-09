@@ -2,12 +2,13 @@
 //  TVILocalMedia.h
 //  TwilioVideo
 //
-//  Copyright © 2016 Twilio Inc. All rights reserved.
+//  Copyright © 2016-2017 Twilio, Inc. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 
 @class TVIAudioConstraints;
+@class TVIAudioController;
 @class TVILocalAudioTrack;
 @class TVILocalVideoTrack;
 @class TVIVideoConstraints;
@@ -20,6 +21,11 @@
  *  many Rooms.
  */
 @interface TVILocalMedia : NSObject
+
+/**
+ *  @brief The Audio Controller.
+ */
+@property (nonatomic, strong, readonly, nonnull) TVIAudioController *audioController;
 
 /**
  *  @brief A collection of local audio tracks.
@@ -77,8 +83,7 @@
  *  @brief Adds a local video track to `TVILocalMedia`.
  *
  *  @param enabled Specifies if `TVILocalVideoTrack` should be enabled or disabled initially.
- *  @param capturer A video capturer which conforms to `TVIVideoCapturer`. Note that only `TVICameraCapturer` and
- *  `TVIScreenCapturer` classes are supported for now.
+ *  @param capturer A video capturer which conforms to `TVIVideoCapturer`.
  *
  *  @return An instance of `TVILocalVideoTrack` if successful, or `nil` if not.
  */
@@ -89,8 +94,7 @@
  *  @brief Adds a local video track to `TVILocalMedia`.
  *
  *  @param enabled Specifies if `TVILocalVideoTrack` should be enabled or disabled initially.
- *  @param capturer A video capturer which conforms to `TVIVideoCapturer`. Note that only `TVICameraCapturer` and
- *  `TVIScreenCapturer` classes are supported for now.
+ *  @param capturer A video capturer which conforms to `TVIVideoCapturer`.
  *  @param constraints The `TVIVideoConstraints` to use. If nil is passed then the default constraints are used instead. 
  *  Default values are determined based upon your device model. For 64-bit devices the default is 640x480x30. If you are
  *  using an older A5 device then 480x360x15 is returned, and for A5x, and A6 devices 480x360x20 is used instead.
