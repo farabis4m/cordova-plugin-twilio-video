@@ -9,6 +9,32 @@ function replace_string_in_file(filename, to_replace, replace_with) {
     fs.writeFileSync(filename, result, 'utf8');
 }
 
+var folderPaths = {
+    cordovaAndroid6: "platforms/android/src/com/ekreative/cordova/videoconversations",
+    cordovaAndroid7: "platforms/android/app/src/main/java/com/ekreative/cordova/videoconversations"
+};
+
+function fileExists(filePath) {
+    try {
+        return fs.statSync(filePath);
+    } catch (error) {
+        return false;
+    }
+}
+
+function returnPath() {
+    var cordovaAndroid6Path = folderPaths.cordovaAndroid6;
+    var cordovaAndroid7Path = folderPaths.cordovaAndroid7;
+
+    if (fileExists(cordovaAndroid6Path)) {
+        return cordovaAndroid6Path;
+    } else if (fileExists(cordovaAndroid7Path)) {
+        return cordovaAndroid7Path;
+    } else {
+        return undefined;
+    }
+}
+
 var target = "stage";
 if (process.env.TARGET) {
     target = process.env.TARGET;
@@ -18,11 +44,14 @@ if (process.env.TARGET) {
     var configobj = JSON.parse(fs.readFileSync(ourconfigfile, 'utf8'));
   // Add java files where you want to add R.java imports in the following array
 
+    var basePath = returnPath();
+    
     var filestoreplace = [
-        "platforms/android/src/com/ekreative/cordova/videoconversations/ConversationActivity.java",
-        "platforms/android/src/com/ekreative/cordova/videoconversations/Dialog.java"
+        basePath + "/ConversationActivity.java",
+        basePath + "/Dialog.java"
     ];
     filestoreplace.forEach(function(val, index, array) {
+        console.log("path:" + val);
         if (fs.existsSync(val)) {
           console.log("Android platform available !");
           //Getting the package name from the android.json file,replace with your plugin's id
